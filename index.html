@@ -143,7 +143,7 @@
                                 console.log(name+'='+code);
                             }else{
                                 var myIcon = L.divIcon({className: 'my-icon',html: '' });
-                                var pop = '<h3 style="margin:0">' + name + '</h3>date: '+ last.date + '<br>confirmed: ' + last.confirmed + '<br>deaths: ' + last.deaths + '<br>recovered: ' + last.deaths;
+                                var pop = '<h3 style="margin:0">' + name + '</h3>date: '+ last.date + '<br>confirmed: ' + last.confirmed + '<br>deaths: ' + last.deaths + '<br>recovered: ' + last.recovered;
 
                                 L.marker([ gps[code].latitude , gps[code].longitude ], {icon: myIcon}).addTo(map).bindPopup(pop).on('click', function() {
                                     //center
