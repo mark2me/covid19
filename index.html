@@ -87,9 +87,9 @@
             });
 
             L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
-	            attribution: '<a href="https://www.openstreetmap.org/">OSM</a>',
+                attribution: '<a href="https://www.openstreetmap.org/">OSM</a>',
                 minZoom: 1,
-	            maxZoom: 18,
+                maxZoom: 18,
                 errorTilrUrl: 'https://placehold.it/400x400&text=No+map'
             }).addTo(map);
 
@@ -168,32 +168,53 @@
             var confirmed = Object.values(data.confirmed);
             var deaths = Object.values(data.deaths);
             var recovered = Object.values(data.recovered);
+            var prev = 0;
+
+            var add = confirmed.map(function(e,index){
+                st = e - prev;
+                prev = e;
+                return st;
+            });
 
             var chart = {
-                type: 'line',
+                type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [
                         {
+                            type: 'line',
                             label: 'confirmed',
                             data: confirmed,
                             borderColor: 'rgba(250, 155, 184,1)',
                             backgroundColor: 'rgba(250, 155, 184,1)',
                             fill: false,
+                            yAxisID: 'y-axis-1'
                         },
                         {
+                            type: 'line',
                             label: 'deaths',
                             data: deaths,
                             borderColor: 'rgba(0, 178, 189, 1)',
                             backgroundColor: 'rgba(0, 178, 189, 1)',
                             fill: false,
+                            yAxisID: 'y-axis-1'
                         },
                         {
+                            type: 'line',
                             label: 'recovered',
                             data: recovered,
                             borderColor: 'rgba(204, 204, 204, 1)',
                             backgroundColor: 'rgba(204, 204, 204, 1)',
                             fill: false,
+                            yAxisID: 'y-axis-1'
+                        },
+                        {
+                            type: 'bar',
+                            data: add,
+                            label: 'Add',
+                            backgroundColor: 'rgba(250, 0, 0,0.85)',
+                            borderColor: 'white',
+                            yAxisID: 'y-axis-2'
                         }
                     ]
                 },
@@ -201,9 +222,9 @@
                 options: {
                     responsive: true,
                     title: {
-						display: true,
-						text: 'Country: ' + country
-					},
+                        display: true,
+                        text: 'Country: ' + country
+                    },
                     tooltips :{
                         enabled: true,
                         mode: 'index',
@@ -217,11 +238,19 @@
                             }
                         }],
                         yAxes: [{
-                            scaleLabel: {
+                            type: 'linear',
                                 display: true,
-                                labelString: 'People',
-                            }
-                        }]
+                                position: 'left',
+                                id: 'y-axis-1',
+                            }, {
+                                type: 'linear',
+                                display: true,
+                                position: 'right',
+                                id: 'y-axis-2',
+                                gridLines: {
+                                    drawOnChartArea: false, // only want the grid lines for one axis to show up
+                                },
+                        }],
                     },
                     legend: {
                         align: 'end',
