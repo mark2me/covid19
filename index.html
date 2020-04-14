@@ -53,12 +53,12 @@
         <![endif]-->
         <div class="container-fluid" style="height: 100%;">
             <div class="row" style="height: 100%;">
-                <div class="col-12 col-sm-6 p-0">
+                <div class="col-12 col-sm-5 p-0">
                     <div id="map"></div>
                 </div>
-                <div class="col-12 col-sm-6">
+                <div class="col-12 col-sm-7">
 
-                    <div id="myChart"><canvas width="400" height="200"></canvas></div>
+                    <div id="myChart"><canvas width="400" height="400"></canvas></div>
 
                     <div>
                         <table id="myTable" class="compact hover stripe row-border" data-order='[[ 1, "desc" ]]'>
@@ -164,7 +164,14 @@
 
         function showChart(country,data){
 
-            var labels = Object.keys(data.confirmed);
+            var obj = Object.keys(data.confirmed);
+            var labels = [];
+
+            for( var d in Object.keys(data.confirmed)){
+                labels.push(obj[d].substring(5) );
+            }
+
+            //var labels = Object.keys(data.confirmed);
             var confirmed = Object.values(data.confirmed);
             var deaths = Object.values(data.deaths);
             var recovered = Object.values(data.recovered);
